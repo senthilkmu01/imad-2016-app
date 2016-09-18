@@ -28,22 +28,12 @@ var content=data.textcontent;
 
 var htmltemplate=`
 <html>
-  <head>
-  <title>${title}</title> 
-  <meta name="viewport" content="width=device-width,initial-scale=1"/>
-  <link href="/ui/style.css" rel="stylesheet" />
-  </head>
-  <body>
-     <div><a href='/articlesecond'>article second</a></div>
-     <hr/>
-     <div>${description}</div>
-     <div>
-         ${content}
-     </div>
-  </body>
-  
+    <head>
+    ${title}</head>
 <html>
 `;
+
+return htmltemplate;
 };
 
 app.get('/', function (req, res) {
