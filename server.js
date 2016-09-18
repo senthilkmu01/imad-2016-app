@@ -15,9 +15,11 @@ var articles={
     </p>
     <p>
              This is the first content.This is the first content.This is the first content. This is the first content.This is the first content.This is the first content.This is the first content.This is the first content.This is the first content.This is the first content.
-    </p>
+    </p>`
+}
+
 };
-};
+
 
 function CreateTemplate(data)
 {
@@ -26,16 +28,13 @@ var title=data.title;
 var description=data.description;
 var content=data.textcontent;
 
-var htmltemplate='
+var htmltemplate=`
 <html>
-    <title>${title}</title>
-    <div>${description}</div>
-    <div>${content}</div>
-</html>
-';
 
+</html>
+`
 return htmltemplate;
-};
+}
 
 app.get('/', function (req, res) {
   res.sendFile(path.join(__dirname, 'ui', 'index.html'));
