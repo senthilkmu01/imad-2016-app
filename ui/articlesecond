@@ -1,0 +1,16 @@
+<html>
+  <head>
+  <title>Article second</title>
+  </head>
+  <body>
+     <div><a href='/'>Home</a></div>
+     <hr/>
+     <div>
+         <p>
+             This is the second content.This is the second content.This is the second content.This is the second content.This is the second content.
+             This is the second content.This is the second content.This is the second content.This is the second content.This is the second content.
+         </p>
+     </div>
+  </body>
+  
+<html>
