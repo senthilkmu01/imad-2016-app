@@ -30,7 +30,11 @@ var content=data.textcontent;
 
 var htmltemplate=`
 <html>
-
+<head>${title}</head>
+<body>
+<div>${description}</div>
+<div>${content}</div>
+<body>
 </html>
 `
 return htmltemplate;
