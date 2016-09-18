@@ -26,12 +26,13 @@ var title=data.title;
 var description=data.description;
 var content=data.textcontent;
 
-var htmltemplate=`
+var htmltemplate='
 <html>
-    <head>
-    ${title}</head>
-<html>
-`;
+    <title>${title}</title>
+    <div>${description}</div>
+    <div>${content}</div>
+</html>
+';
 
 return htmltemplate;
 };
