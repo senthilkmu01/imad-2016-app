@@ -18,6 +18,6 @@ button.onclick=function(){
       }
     };
     
-    request.open('GET','',true);
+    request.open('GET','http://senthilkmu01.imad.hasura-app.io/counter',true);
     request.send(null);
 };
