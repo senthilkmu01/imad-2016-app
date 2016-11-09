@@ -6,6 +6,13 @@ var Pool=require('pg').Pool;
 var app = express();
 app.use(morgan('combined'));
 
+var config={
+    user:'senthilkmu01',
+    database:'',
+    host:'db.imad.hasura-app.io',
+    port:'5432'
+}
+
 var articles={
  'articleone':{
     title: 'Article One',
