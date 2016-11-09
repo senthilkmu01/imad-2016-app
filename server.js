@@ -79,7 +79,26 @@ app.get('/', function (req, res) {
 app.get('/:ArticleName',function(req,res)
 {
     var articlename=req.params.ArticleName
-    res.send(CreateTemplate(articles[articlename]));
+     pool.query("SELECT * FROM User WHERE UserName='"+req.params.ArticleName+"'",function(err,result){
+        if(err)
+        {
+            res.status(500).send(err.toString());
+        }
+        else
+        {
+            if(result.rows.length===0)
+            {
+                res.status(400).send('No records found');
+            }
+            else
+            {
+                var datalist=result.rows[0];
+                res.send(CreateTemplate(datalist));
+            }
+        }
+        
+    });
+    //res.send(CreateTemplate(articles[articlename]));
 });
 
 
