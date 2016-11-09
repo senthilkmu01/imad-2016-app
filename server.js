@@ -79,7 +79,7 @@ app.get('/', function (req, res) {
 app.get('/:ArticleName',function(req,res)
 {
     var articlename=req.params.ArticleName
-     pool.query("SELECT * FROM User WHERE UserName=1$",req.params.ArticleName,function(err,result){
+     pool.query("SELECT * FROM User WHERE UserName=1$",[req.params.ArticleName],function(err,result){
         if(err)
         {
             res.status(500).send(err.toString());
