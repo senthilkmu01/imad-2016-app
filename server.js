@@ -60,6 +60,7 @@ app.get('/loadchefs',function(req,res)
   });
 });
 
+
 app.get('/loadcountries',function(req,res)
 {
   pool.query("select countryid,countryname from countries order by countryname asc;",function(err,result){
@@ -180,19 +181,38 @@ pool.query(query , function(err,result){
 });
 
 
-var counter=0;
-app.get('/counter',function(req,res)
-{
-    counter=counter+1;
-    res.send(counter.toString());
-});
-
 app.get('/', function (req, res) {
   res.sendFile(path.join(__dirname, 'ui', 'index.html'));
 });
 
 app.get('/ui/style.css', function (req, res) {
   res.sendFile(path.join(__dirname, 'ui', 'style.css'));
+});
+
+app.get('/:ArticleName',function(req,res)
+{
+    var articlename=req.params.ArticleName
+     pool.query("SELECT * FROM User WHERE UserName=1$",[req.params.ArticleName],function(err,result){
+        if(err)
+        {
+            res.status(500).send(err.toString());
+        }
+        else
+        {
+            if(result.rows.length===0)
+            {
+                res.status(400).send('No records found');
+            }
+            else
+            {
+                var datalist=result.rows[0];
+                res.send(CreateTemplate(datalist));
+            }
+        }
+        
+    });
+    //res.send(CreateTemplate(articles[articlename]));
+
 });
 
  app.get('/ui/POET.css', function (req, res) {
