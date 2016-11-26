@@ -300,7 +300,7 @@ app.get('/jqwidgets/jqxgrid.export.js', function (req, res) {
 res.sendFile(path.join(__dirname, 'jqwidgets', 'jqxgrid.export.js'));
 });
 
-var port = 8080; // Use 8080 for local development because you might already have apache running on 80
-app.listen(8080, function () {
+var port = 7001; // Use 8080 for local development because you might already have apache running on 80
+app.listen(7001, function () {
   console.log(`IMAD course app listening on port ${port}!`);
 });
