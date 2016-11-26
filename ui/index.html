@@ -1,22 +1,181 @@
-<!doctype html>
-<html>
-    <head>
-        <link href="/ui/style.css" rel="stylesheet" />
-    </head>
-    <body>
-        <div class="center">
-            <img src="/ui/madi.png" class="img-medium"/>
-        </div>
-        <hr/>
-        <div class="center text-big bold">
+    <!doctype html>
+    <html>
+        <head>
+            <title>
+        Home Page - My ASP.NET Application
+        </title>
+            <script type="text/javascript" src="http://code.jquery.com/jquery-1.7.1.min.js"></script>
+            <script type="text/javascript" src=/ui/main.js ></script>
+            <link href="/ui/bootstrap.css" rel="stylesheet"/>
+            <link href="/ui/style.css" rel="stylesheet" />
+            <link href="/ui/POET.css" rel="stylesheet" />
+            <link rel="stylesheet" href="/jqwidgets/styles/jqx.base.css" type="text/css" />
+            <script type="text/javascript" src="/scripts/jquery-1.11.1.min.js"></script>
+            <script type="text/javascript" src="/scripts/demos.js"></script>
+            <script type="text/javascript" src="/jqwidgets/jqxcore.js"></script>
+            <!--<script type="text/javascript" src="/jqwidgets/jqxlistmenu.js"></script>-->
+            <script type="text/javascript" src="/jqwidgets/jqxbuttons.js"></script>
+            <script type="text/javascript" src="/jqwidgets/jqxDropDownList.js"></script>
+            <script type="text/javascript" src="/jqwidgets/jqxlistbox.js"></script>-->
+            <script type="text/javascript" src="/jqwidgets/jqxcombobox.js"></script>
+            <script type="text/javascript" src="/jqwidgets/jqxscrollbar.js"></script>
+            <script type="text/javascript" src="/jqwidgets/jqxdraw.js"></script>
+            <script type="text/javascript" src="/jqwidgets/jqxchart.core.js"></script>
+            <script type="text/javascript" src="/jqwidgets/jqxdata.js"></script>
+            <script type="text/javascript" src="/jqwidgets/jqxmenu.js"></script>
+            <script type="text/javascript" src="/jqwidgets/jqxgrid.js"></script>
+            <script type="text/javascript" src="/jqwidgets/jqxgrid.selection.js"></script>
+            <script type="text/javascript" src="/jqwidgets/jqxgrid.filter.js"></script>
+            <script type="text/javascript" src="/jqwidgets/jqxgrid.sort.js"></script>
+            <script type="text/javascript" src="/jqwidgets/jqxnavbar.js"></script>
+            <script type="text/javascript" src="/jqwidgets/jqxwindow.js"></script>
+            <script type="text/javascript" src="/jqwidgets/jqxsplitter.js"></script>
+            <script type="text/javascript" src="/jqwidgets/jqxgrid.columnsresize.js"></script> 
+            <script type="text/javascript" src="/jqwidgets/jqxdata.js"></script> 
+            <script type="text/javascript" src="/jqwidgets/jqxdata.export.js"></script> 
+            <script type="text/javascript" src="/jqwidgets/jqxgrid.export.js"></script> 
+            <link href="/favicon.ico" rel="shortcut icon" type="image/x-icon" />
+        </head>
+    
+        <body background="/Pictures/Meals/background.jpg" >
+            <div class="navbar navbar-inverse navbar-fixed-top">
+                <div class="container">
+                    <div class="navbar-header">
+                        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                        </button>
+                    </div>
+                    <div class="navbar-collapse collapse">
+                        <ul class="nav navbar-nav">
+                            <li><a href="./">Home</a></li>
+                            
+                        </ul>
+                        
+                                
+                            
+                    </div>
+                </div>
+            </div>
+        <div class="container body-content">
 
-            Hi! I am JSK how  get to clone done here!.
+        <div class="jumbotron" style="height:2%" >
+        <div style="width:99%; height:2%; font-size:16px; font-family:verdana; text-align:center">
+       <b> Welcome to Leaf Dinner</b>    
         </div>
-        <hr/>
-        <div class="footer">
-            <button id="btncounter">click me</button>is clicked <span id="count">0</span> times
         </div>
-        <script type="text/javascript" src="/ui/main.js">
-        </script>
-    </body>
-</html>
+
+        <div id="jqxNavBar" style="margin-top:30px;">
+        <ul>
+        <li>Dinner Recipies</li>
+        <li>Select Meals</li>
+        <li>View Reports</li>
+        </ul>
+        </div>
+        
+            
+                <!--<div class="jumbotron" style=" height:400px; font-family:verdana; font-size:20;position:relative">
+                <div id= "appName" style="align:center;padding-left:500px; " >BANANA LEAF CATERING SERVICES</div>
+                <br>
+                <br>
+                <div id="meal1" style=""><img src="/Pictures/Meals/11.jpg" alt="" /></div>
+                <div id="meal2"><img src="/Pictures/Meals/12.jpg" alt="" /></div>
+                <div id="meal3"><img src="/Pictures/Meals/13.jpg" alt="" /></div>
+                <div id="meal4"><img src="/Pictures/Meals/14.jpg" alt="" /></div>
+
+                </div>-->
+        
+        <div id="page1" style="width: 99%; ">
+        <div class="jumbotron"  >
+            <!--<div class="testscroll">-->
+            <div style="width: 99%; ">
+                <div id = 'filterClass'>
+                <table>
+                <tr style="width:75%, height:'10px'; padding-bottom: '2px'; ">
+                <td style="font-family:verdana; font-size: 12pt;">Country</td><td></td><td></td>
+                <td><div id = 'jqxCountry' style="width:32%"></div></td><td></td><td></td>
+                <td style="font-family:verdana; font-size: 12pt"><div id = "cheef">Chefs</div></td><td></td><td></td>
+                <td><div id = 'jqxChef' style="width:32%"></div></td>
+                </tr>              
+                </table>
+                </div>
+            
+            <div id="tableList">
+                    <div id="mainSplitter">
+                        <div class="splitter-panel">
+                            <div style="padding-bottom:10px"></div>
+                            <div class="testscroll" style="height:40%">
+                            <div id="jqxListBox" style="margin-left:15px"></div>
+                             
+                            <p id="loadinglistbox">
+                            <img src="/themes/black-cab/loading.gif" alt="Loading…" />
+                            </p>
+                            </div>
+                            <div  style="font-size: 13px; font-family: Verdana;height:15%" id="selectionlog"></div>
+                            <div style="font-size: 13px; font-family: Verdana;" id = "selectAllDinner">
+                                <input type="button" value="Select All Dinner" id='jqxButton' />
+                            </div>
+                        </div>
+                        <div class="splitter-panel">
+                             <div class="testscroll" style="height:100%">
+                            <div id= "panel2"></div>
+                            <p id="loading">
+                            <img src="/themes/black-cab/loading.gif" alt="Loading…" />
+                            </p>
+                            </div><br><br>
+                        </div>
+                    </div>
+               
+            </div>
+             
+            </div>
+            </div>
+           
+        </div>
+        <!--</div>-->
+        <div id="page2">
+            <div class="jumbotron" style="font-size:16px; font-family:verdana;text-align: center;" > Dinner and its meals Details
+            <table>
+            <tr ><td style="width:70%;height:90%">
+            <div id= 'jqxChefMealsGrid'  ></div></td>
+            <td style="width:30%;height:90%">
+             <div >
+                 <table><tr><td>
+            <div style='margin-left: 170px; float: left;'>
+                <input type="button" value="Export to Excel" id='excelExport' />
+                <br /><br />
+                <input type="button" value="Export to XML" id='xmlExport' />
+            </div></td></tr><tr><td>
+            <div style='margin-left: 170px;  float: left;'>
+                <input type="button" value="Export to CSV" id='csvExport' />
+                <br /><br />
+                <input type="button" value="Export to TSV" id='tsvExport' />
+            </div></td></tr><tr><td>
+            <div style=' margin-left: 170px; float: left;'>
+                <input type="button" value="Export to HTML" id='htmlExport' />
+                <br /><br />
+                <input type="button" value="Export to JSON" id='jsonExport' />
+            </div></td></tr><tr><td>
+            <div style='margin-left: 170px; float: left;'>
+                <input type="button" value="Export to PDF" id='pdfExport' />
+            </div></td></tr></table>
+        </div></td>
+        </tr></table>
+          </div>
+        </div>
+        <div id="page3">
+           
+            <div class="jumbotron"  >
+            <div id= "loadCharts" style = "width:99%">
+            <div id='chartContainer' style="width:99%; height:400px;  "></div>
+            </div>
+            </div>
+        </div>
+        </div>
+        <div id = "selectedDinner"></div>
+        <!--<div id= "loading-image" class = "loading-full">
+            <img src="\Pictures\Meals\Preloader_1.gif" alt="Loading…"  /> 
+        </div>-->
+         </body>
+    </html>
