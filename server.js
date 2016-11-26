@@ -229,6 +229,7 @@ app.get('/scripts/jquery-1.11.1.min.js', function (req, res) {
 app.get('/scripts/demos.js', function (req, res) {
   res.sendFile(path.join(__dirname, 'scripts', 'demos.js'));
 });
+
 app.get('/jqwidgets/jqxcore.js', function (req, res) {
   res.sendFile(path.join(__dirname, 'jqwidgets', 'jqxcore.js'));
 });
