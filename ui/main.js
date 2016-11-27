@@ -1,25 +1,32 @@
 
         var pagesize = 0;
-        var rows = 10; 
+        var rows = 5; 
         var serverurlpath='http://localhost:7001/';
         var p = 0;
-        var selCountryId = -1;
 
        $(document).ready(function () {
             var win = $(window);
             loadCountries();
             loadChefCustomerGrid();
-           // loadChefs();
-             $("#selectedDinner").val(0);
+            loadChefs();
+             $("#selectedDinner").val(1);
             loadDinnerMenu();   
             loadCharts1(); 
-            $('#jqxChef').hide();
-             $('#cheef').hide();
+
             $('#chartContainer').jqxChart({});
-          //   $("#loading-image").hide(); 
+         //    moveit();  //Move images in Circle
+
+        //  //window loading
+        //     $("#jqxwindow").jqxWindow({
+        //     height: '100px',
+        //     width: '200px',
+        //     showCloseButton: false,
+        //     //theme: 'energyblue',
+        //     autoOpen: true
+        //     });
             $("#jqxListBox").jqxListBox({ autoHeight:false,filterable: true, theme:'POET'});
             $('#mainSplitter').jqxSplitter({ width: 1000, height: 480,theme:'POET', panels: [{ size: 300 },{size: 600}] });
-            $('#jqxButton').jqxButton({width: '250px', height:'25px', theme:'POET'});  
+              
     
             $("#jqxNavBar").jqxNavBar({ columns: ['33%', '33%', '33%'], height: 50, selectedItem: 0 });
             $("#page2").hide();
@@ -60,18 +67,11 @@
                 if ($(this).scrollTop() + $(this).innerHeight() >= $(this)[0].scrollHeight) {
                     pagesize += 1;
                     $('#loading').show();
-                    //randomPost(pagesize);
+                    randomPost(pagesize);
                     $('#loading').hide();
                 }
             });
         
-            $('#jqxButton').on('click', function () {
-            console.log('You clicked me!');
-            selCountryId = -1;
-            randomPost(pagesize);
-            $("#jqxCountry").jqxDropDownList({selectedIndex: -1});
-            });
-            
             $('#jqxListBox').on('change', function (event) {
             var args = event.args;
             if (args) {
@@ -83,10 +83,8 @@
             var value = item.value;
             console.log("Dinner name from label: " + label);
             $("#panel2").val("");
-            $('#loading').show();
             $("#selectedDinner").val(value);
             loadDinnerMenu();
-            $('#loading').hide();
             }
             });
 
@@ -120,45 +118,15 @@
         }
         });
             
-
-         // load Chef on select of the countryid
-       $("#jqxCountry").on('change',function(event){
-      //  $("#loading-image").show();
-         $("#jqxChef").jqxDropDownList('clear'); 
-         $('#jqxChef').show();   
-         var args = event.args;
-        if (args) {
-        // index represents the item's index.                
-        var index = args.index;
-        var item = args.item;
-        // get item's label and value.
-        var label = item.label;
-        var value = item.value;
-        selCountryId = value;
-        var type = args.type; // keyboard, mouse or null depending on how the item was selected.
-        } 
-         loadChefs(value);     
-        console.log("selCountryId == >" + selCountryId);    
-        console.log("selected item == >" + value);   
-        randomPost(pagesize);  
-     //  $("#loading-image").hide();           
-       });
-       
-       
+       });//Ready ends
 
 
-       });
-       //Ready ends
-
-
-        function loadChefs(value)
+        function loadChefs()
         {
-            var countryid = value;
-            $('#loadinglistbox').show();
             obj = $.ajax({
                     type: 'get',
                     // contentType ('application/x-www-form-urlencoded; charset=UTF-8'),
-                    url: serverurlpath+"loadchefs/"+countryid,
+                    url: serverurlpath+"loadchefs",
                     datatype:JSON,
                     cache: false,
                     async : true,
@@ -168,7 +136,6 @@
             });
            
             obj.done(function(data){
-                  $('#cheef').show();
                  var dataEdited = []; var chefPic= "";
                     dataEdited  =  JSON.parse(data);
                     var sourcei=0; var count = 1;
@@ -176,7 +143,7 @@
                     $.each(dataEdited,function(key, value) {
                         var chefsid=value["chefsid"].toString();
                         var chefsname=value["firstname"].toString() +" " + value["lastname"].toString();
-                        var chefspic=value["pic"];
+                        var chefspic="person"+count+".jpg";
                         chefPic = chefspic;
                         source[sourcei] = { chefsid:chefsid,chefsname:chefsname,chefspic:chefspic };
                         sourcei=sourcei+1;
@@ -188,14 +155,13 @@
                     $('#jqxChef').jqxComboBox({ selectedIndex: -1,theme:'POET', placeHolder:"Select Chef..", source: dataAdapter, displayMember: "chefsname", valueMember: "chefsid", itemHeight: 70, height: 25, width: 270,
                         renderer: function (index, label, value) {
                             var datarecord = source[index];
-                            var imgurl = '/Pictures/Meals/'+datarecord.chefspic;
+                            var imgurl = '/Pictures/Meals/'+chefPic;
                             var img = '<img height="50" width="45" src="' + imgurl + '"/>';
                             var table = '<table style="min-width: 150px;"><tr><td style="width: 55px;" rowspan="2">' + img + '</td><td>' + datarecord.chefsname + '</td></tr><tr><td>' + datarecord.chefsid + '</td></tr></table>';
                             return table;
                         }
                     });
-                });  
-                $('#loadinglistbox').hide(); 
+                });   
         }
 
 
@@ -305,8 +271,6 @@
                     selectedIndex: -1, source: dataAdapter, theme:'POET',displayMember: "countryname", valueMember: "countryid", width: 200, height: 25
                 });
 
-               
-
         }
 
         function loadDinnerMenu()
@@ -315,7 +279,7 @@
             var stringURL = "";
             stringURL = "http://localhost:7001/griddata/";
             var selectedDinnerId = $("#selectedDinner").val();
-            stringURL += ""+selectedDinnerId;
+            stringURL += selectedDinnerId;
             console.log("stringURL = >" + stringURL);
             obj = $.ajax({
             type: 'get',
@@ -337,9 +301,9 @@
                 $("#panel2").html("");
                
                 $.each(dataEdited,function(key,value) {
+                  if(value["mealsname"] != undefined){
                 console.log("Object details " + value["mealsname"] + "mealsComments " + value["mealscomments"] +"mealsPictures " +value["mealspics"]);
                 $("#panel2").append("<table><tr bgcolor='#808000'; style = 'font-family:verdana;font-size:20px;text-align:center'><th align='center'><b>"+value["dinnername"]+"</b></th></tr>");
-                
                 var nameStr = value["mealsname"];
                 var picStr = value["mealspics"];
                 var commentsStr = value["mealscomments"];
@@ -362,7 +326,7 @@
                 //     $("#panel2").append("<td></td><td ><img class='autoResizeImage' src= /Pictures/Meals/"+individualPics[v]+" /></td><td></td></tr>");
                  
                 // }
-                               
+                }              
                 });
 
                $("#panel2").append( "</table>");
@@ -370,8 +334,6 @@
                    });   
                       
         }
-
-       
         
         // Generate a random post
         function randomPost(pagesize) {
@@ -379,17 +341,12 @@
             var rowstartno = 0;
             var rowendno = 0; var stringURL = "";
             // Paragraphs that will appear in the post
-           // rowstartno = pagesize * rows;
-           rowstartno = pagesize;
+            rowstartno = pagesize * rows;
             rowendno=rowstartno+rows;
             stringURL = "http://localhost:7001/griddata/";
             if(rows != undefined && rows != null )
             {  
               stringURL+=(""+rows.toString() +"/"+rowstartno.toString());
-            }
-            if(selCountryId != -1)
-            {
-            stringURL+="/"+selCountryId.toString();
             }
             console.log("stringURL = >" + stringURL);
             obj = $.ajax({
@@ -405,18 +362,25 @@
         });
 
              obj.done(function(data){
-                  console.log("Data returns1234 = >" + JSON.stringify(data));   
-               
+                  console.log("Data returns = >" + JSON.stringify(data));   
+                // var post="";
+                 //var dataEdited = [];
+                 //   dataEdited  =  JSON.parse(data);
+                //     $.each(dataEdited,function(key, value) {
+                //     post += '<p>';
+                //     post += '<li>';
+                //     post += '<article>';
+                //     post += '<header><h1 style="font-family: Verdana, Geneva, Tahoma, sans-serif;font-size: 18px;">Dinner Name '+value["dinnername"]+'!</h1></header>';
+                //     post += value["address"];
+                //     post += '</article>';
+                //     post += '</li>';
+                //     post += '</p>';
+                //     });
+                //  $('#posts').append(post);
                 var dinnerCollections = data;
-                if(JSON.stringify(dinnerCollections).length == 0)
-                {   
-                    console.log("dinnerCollections).length");
-                    $("#jqxListBox").jqxListBox({width: 250, height: 200,selectedIndex: -1,theme:'POET'});
-                }
                 var jsonString = JSON.stringify(dinnerCollections);
                 var dataEdited = []; var address ="";
                 dataEdited  =  JSON.parse(data);
-                
                 var sourcei=0;
                 var source=new Array();
                 $.each(dataEdited,function(key, value) {
@@ -430,7 +394,7 @@
 				
                 var dataAdapter = new $.jqx.dataAdapter(source);
                 // Create a jqxListBox
-				$("#jqxListBox").jqxListBox({ source: dataAdapter,theme:'POET', displayMember: "dinnername", valueMember: "dinnerid", width: 250, height: 200,selectedIndex: 0
+				$("#jqxListBox").jqxListBox({ source: dataAdapter,theme:'POET', displayMember: "dinnername", valueMember: "dinnerid", width: 250, height: 165,selectedIndex: 0
                 // renderer: function (index, label, value) {
                 //             var datarecord = source[index];
                 //             address = datarecord.address;}
@@ -446,8 +410,8 @@
                             //  var adressElement = $("<div></div>");
                             //  adressElement.text("address: " + address);
                             $("#selectionlog").children().remove();
-                           // $("#selectionlog").append(labelelement);
-                           // $("#selectionlog").append(valueelement);
+                            $("#selectionlog").append(labelelement);
+                            $("#selectionlog").append(valueelement);
                             $("#selectedDinner").val(valueelement);
                             
                           //  $("#selectionlog").append(adressElement);
@@ -459,7 +423,6 @@
              
                       
         }
-
 
 function loadChefCustomerGrid()
 {
@@ -575,6 +538,50 @@ function loadChefCustomerGrid()
 }
 
 
+
+function moveit() {
+    p += 0.02;
+
+    var r = 175;
+    var xcenter = 200;
+    var ycenter = 200;
+
+    
+    var newLeft = Math.floor(xcenter + (r* Math.cos(p+90)));
+    var newTop = Math.floor(ycenter + (r * Math.sin(p+90)));
+    var newLeft1 = Math.floor(xcenter + -(r* Math.cos(p+90)));
+    var newTop1 = Math.floor(ycenter + -(r * Math.sin(p+90)));
+     var newLeft2 = Math.floor(ycenter + (r* Math.cos(p+170)));
+    var newTop2 = Math.floor(xcenter + (r* Math.sin(p+170)));
+     var newLeft3 = Math.floor(ycenter + -(r* Math.cos(p+170)));
+    var newTop3 = Math.floor(xcenter + -(r* Math.sin(p+170)));
+    
+    
+    $('#meal1').animate({
+            top: newTop,
+            left: newLeft,
+        }, 10, function() {
+            moveit()
+                });
+    $('#meal2').animate({
+        top: newTop1,
+        left: newLeft1,
+    },10, function() {
+        moveit();
+    });
+    $('#meal3').animate({
+        top: newTop2,
+        left: newLeft2,
+    },10, function() {
+        moveit();
+    });
+    $('#meal4').animate({
+        top: newTop3,
+        left: newLeft3,
+    },10, function() {
+        moveit();
+    });
+ }
 
 
 function loadPageLoader()

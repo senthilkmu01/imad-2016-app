@@ -15,30 +15,6 @@ var app = express();
 app.use(morgan('combined'));
 var pool=new Pool(config);
 
-app.get('/griddata/:rowsTodisplay/:pageno/:countryid',function(req,res)
-{
-  console.log(req.params.rowsTodisplay);
-
-  pool.query("SELECT dinnersid,dinnername,address FROM dinners where countryid ="+req.params.countryid+" LIMIT "+req.params.rowsTodisplay+" offset "+req.params.pageno+";",function(err,result){
-         if(err)
-        {
-            res.status(500).send(err.toString());
-        }
-        else
-        {
-            if(result.rows.length===0)
-            {
-                res.status(400).send('No records found');
-            }
-            else
-            {
-                res.send(JSON.stringify(result.rows));
-            }
-        }
-        
-    });
-});
-
 app.get('/griddata/:rowsTodisplay/:pageno',function(req,res)
 {
   console.log(req.params.rowsTodisplay);
@@ -63,10 +39,9 @@ app.get('/griddata/:rowsTodisplay/:pageno',function(req,res)
     });
 });
 
-app.get('/loadchefs/:countryid',function(req,res)
+app.get('/loadchefs',function(req,res)
 {
-  console.log("eq.params.countryid=>"+ req.params.countryid);
-  pool.query("select * from chefs where countryid = "+req.params.countryid,function(err,result){
+  pool.query("select * from chefs;",function(err,result){
          if(err)
         {
             res.status(500).send(err.toString());
@@ -85,12 +60,12 @@ app.get('/loadchefs/:countryid',function(req,res)
   });
 });
 
+
 app.get('/loadcountries',function(req,res)
 {
   pool.query("select countryid,countryname from countries order by countryname asc;",function(err,result){
          if(err)
         {
-
             res.status(500).send(err.toString());
         }
         else
@@ -206,13 +181,6 @@ pool.query(query , function(err,result){
 });
 
 
-var counter=0;
-app.get('/counter',function(req,res)
-{
-    counter=counter+1;
-    res.send(counter.toString());
-});
-
 app.get('/', function (req, res) {
   res.sendFile(path.join(__dirname, 'ui', 'index.html'));
 });
@@ -237,7 +205,9 @@ app.get('/themes/black-cab/loading.gif', function (req, res) {
   res.sendFile(path.join(__dirname, 'themes/black-cab/', 'loading.gif'));
 });
 
-
+app.get('/scripts/demos.js', function (req, res) {
+  res.sendFile(path.join(__dirname, 'scripts', 'demos.js'));
+});
 app.get('/Pictures/Meals/:loadimage', function (req, res) {
   res.sendFile(path.join(__dirname,'/Pictures/Meals',req.params.loadimage));
 });
@@ -258,10 +228,8 @@ app.get('/jqwidgets/styles/jqx.base.css', function (req, res) {
 app.get('/scripts/jquery-1.11.1.min.js', function (req, res) {
   res.sendFile(path.join(__dirname, 'scripts', 'jquery-1.11.1.min.js'));
 });
-app.get('/scripts/demos.js', function (req, res) {
-  res.sendFile(path.join(__dirname, 'scripts', 'demos.js'));
-});
-app.get('/jqwidgets/jqxcore.js', function (req, res) {
+
+app.get('/jqwidgets/jqxcore.js', function (req, res){
   res.sendFile(path.join(__dirname, 'jqwidgets', 'jqxcore.js'));
 });
 app.get('/jqwidgets/jqxlistmenu.js', function (req, res) {
@@ -330,8 +298,6 @@ res.sendFile(path.join(__dirname, 'jqwidgets', 'jqxdata.export.js'));
 app.get('/jqwidgets/jqxgrid.export.js', function (req, res) {
 res.sendFile(path.join(__dirname, 'jqwidgets', 'jqxgrid.export.js'));
 });
-
-
 
 var port = 7001; // Use 8080 for local development because you might already have apache running on 80
 app.listen(7001, function () {
