@@ -205,7 +205,9 @@ app.get('/themes/black-cab/loading.gif', function (req, res) {
   res.sendFile(path.join(__dirname, 'themes/black-cab/', 'loading.gif'));
 });
 
-
+app.get('/scripts/demos.js', function (req, res) {
+  res.sendFile(path.join(__dirname, 'scripts', 'demos.js'));
+});
 app.get('/Pictures/Meals/:loadimage', function (req, res) {
   res.sendFile(path.join(__dirname,'/Pictures/Meals',req.params.loadimage));
 });
@@ -226,10 +228,8 @@ app.get('/jqwidgets/styles/jqx.base.css', function (req, res) {
 app.get('/scripts/jquery-1.11.1.min.js', function (req, res) {
   res.sendFile(path.join(__dirname, 'scripts', 'jquery-1.11.1.min.js'));
 });
-app.get('/scripts/demos.js', function (req, res) {
-  res.sendFile(path.join(__dirname, 'scripts', 'demos.js'));
-});
-app.get('/jqwidgets/jqxcore.js', function (req, res) {
+
+app.get('/jqwidgets/jqxcore.js', function (req, res){
   res.sendFile(path.join(__dirname, 'jqwidgets', 'jqxcore.js'));
 });
 app.get('/jqwidgets/jqxlistmenu.js', function (req, res) {

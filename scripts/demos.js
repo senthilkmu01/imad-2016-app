@@ -1,6 +1,6 @@
-﻿function getDemoTheme() {
+function getDemoTheme() {
     var theme = document.body ? $.data(document.body, 'theme') : null
-    if (theme == null) {
+    if (theme === null) {
         theme = '';
     }
     else {
@@ -11,7 +11,7 @@
         return '';
     }
 
-    var theme = window.location.toString().substring(1 + themestart);
+     theme = window.location.toString().substring(1 + themestart);
     if (theme.indexOf('(') >= 0)
     {
         theme = theme.substring(1);
@@ -42,10 +42,10 @@
         url = "../../../jqwidgets/styles/jqx." + theme + '.css';
     }
 
-    if (document.createStyleSheet != undefined) {
+    if (document.createStyleSheet !== undefined) {
         var hasStyle = false;
         $.each(document.styleSheets, function (index, value) {
-            if (value.href != undefined && value.href.indexOf(theme) != -1) {
+            if (value.href !== undefined && value.href.indexOf(theme) !== -1) {
                 hasStyle = true;
                 return false;
             }
@@ -55,10 +55,10 @@
         }
     }
     else {
-        var hasStyle = false;
+         hasStyle = false;
         if (document.styleSheets) {
             $.each(document.styleSheets, function (index, value) {
-                if (value.href != undefined && value.href.indexOf(theme) != -1) {
+                if (value.href !== undefined && value.href.indexOf(theme) !== -1) {
                     hasStyle = true;
                     return false;
                 }
@@ -69,7 +69,7 @@
             link[0].onload = function () {
                 if ($.jqx && $.jqx.ready) {
                     $.jqx.ready();
-                };
+                }
             }
             $(document).find('head').append(link);
         }
@@ -77,7 +77,7 @@
     $.jqx = $.jqx || {};
     $.jqx.theme = theme;
     return theme;
-};
+}
 var theme = '';
 try
 {
