@@ -9,7 +9,7 @@
             loadCountries();
             loadChefCustomerGrid();
             loadChefs();
-             $("#selectedDinner").val(0);
+             $("#selectedDinner").val(1);
             loadDinnerMenu();   
             loadCharts1(); 
 
@@ -271,8 +271,6 @@
                     selectedIndex: -1, source: dataAdapter, theme:'POET',displayMember: "countryname", valueMember: "countryid", width: 200, height: 25
                 });
 
-               
-
         }
 
         function loadDinnerMenu()
@@ -281,7 +279,7 @@
             var stringURL = "";
             stringURL = "http://localhost:7001/griddata/";
             var selectedDinnerId = $("#selectedDinner").val();
-            stringURL += ""+selectedDinnerId;
+            stringURL += selectedDinnerId;
             console.log("stringURL = >" + stringURL);
             obj = $.ajax({
             type: 'get',
@@ -303,9 +301,9 @@
                 $("#panel2").html("");
                
                 $.each(dataEdited,function(key,value) {
+                  if(value["mealsname"] != undefined){
                 console.log("Object details " + value["mealsname"] + "mealsComments " + value["mealscomments"] +"mealsPictures " +value["mealspics"]);
                 $("#panel2").append("<table><tr bgcolor='#808000'; style = 'font-family:verdana;font-size:20px;text-align:center'><th align='center'><b>"+value["dinnername"]+"</b></th></tr>");
-                
                 var nameStr = value["mealsname"];
                 var picStr = value["mealspics"];
                 var commentsStr = value["mealscomments"];
@@ -328,7 +326,7 @@
                 //     $("#panel2").append("<td></td><td ><img class='autoResizeImage' src= /Pictures/Meals/"+individualPics[v]+" /></td><td></td></tr>");
                  
                 // }
-                               
+                }              
                 });
 
                $("#panel2").append( "</table>");
